@@ -1,3 +1,11 @@
+"""
+File name:      keras2c_mod.py.py
+Written by:     Niranjan Bhujel
+Date:           June 31, 2022
+Description:    Contains modification to original keras2c.
+"""
+
+
 import os
 import zipfile
 import numpy as np
@@ -95,6 +103,52 @@ def __generate_call__(model, function_name, filename, malloc, verbose):
 
 
 def generate(model, function_name, same_dir=True, malloc=False, num_tests=0, verbose=True):
+    """
+    Generate C code for specified keras model.
+
+    Parameters
+    ----------
+    model : keras.model
+        Keras model for which C code is requried.
+    function_name : str
+        Desired name of the function and file
+    same_dir : bool, optional
+        Whether all required C files are to be added in current directory. If True, all .c and .h files are added in current directory. If False, they are added in 'include' folder on current directory, by default True
+    malloc : bool, optional
+        Whether memory allocation is required, by default False
+    num_tests : int, optional
+        Number of tests to perform to validate the generated code, by default 0
+    verbose : bool, optional
+        Whether info are to be displayed, by default True
+    Examples
+    --------
+
+    >>> import tensorflow as tf
+    >>> from tensorflow import keras
+    >>> import keras2c
+    >>> model = keras.models.Sequential()
+    >>> model.add(keras.layers.Flatten(input_shape=(3, )))
+    >>> model.add(keras.layers.Dense(5, activation="relu"))
+    >>> model.add(keras.layers.Dense(5, activation="relu"))
+    >>> model.add(keras.layers.Dense(1, activation="tanh"))
+    >>> keras2c.generate(model, 'model_file', same_dir=False, malloc=False, num_tests=0)
+    All checks passed
+    Gathering Weights
+    Writing layer  flatten
+    Writing layer  dense
+    Writing layer  dense_1
+    Writing layer  dense_2
+    Formatted  model_file.h
+    Formatted  model_file.c
+    Done
+    C code is in 'model_file.c' with header file 'model_file.h'
+    A subdirectory or file include already exists.
+    Unchanged  model_file_call.h
+    Formatted  model_file_call.c
+    Build command:
+    gcc -std=c99 -I./include/ include/*.c model_file.c model_file_call.c <OTHER_C_FILE> -o <EXE_NAME>
+    
+    """    
     lib_files = [
         'k2c_activations.c',
         'k2c_convolution_layers.c',

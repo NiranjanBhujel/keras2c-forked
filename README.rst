@@ -39,8 +39,8 @@ It can also be used with a python environment in the following manner:
 
 .. code-block:: python
 
-    from keras2c import k2c
-    k2c(model, function_name, malloc=False, num_tests=10, verbose=True)
+    import keras2c
+    keras2c.generate(model, function_name, same_dir=False, malloc=False, num_tests=0, verbose=True)
 
 For more information, see `Installation <https://f0uriest.github.io/keras2c/installation.html>`_ and  `Usage <https://f0uriest.github.io/keras2c/usage.html>`_
 
