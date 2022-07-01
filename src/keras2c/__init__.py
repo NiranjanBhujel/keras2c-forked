@@ -7,6 +7,7 @@ https://github.com/f0uriest/keras2c
 
 from . import keras2c_main
 from .keras2c_main import k2c
+from .keras2c_mod import generate
 
 import os
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
